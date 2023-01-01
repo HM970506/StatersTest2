@@ -1,6 +1,6 @@
 # STARTERS 취업부트캠프 최종평가(React)
 
-### 평가 안내
+### 평가 안내 ([노션 링크](https://www.notion.so/flearnerhq/STARTERS-React-324fcdbb82074c94811e833b79a44188))
 
 ---
 
