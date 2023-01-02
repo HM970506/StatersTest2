@@ -4,7 +4,6 @@ import { NumberButton as Style } from "../styles/buttons";
 
 export default function NumberButton({ number }) {
   const [result, setResult] = useRecoilState(resultSelector);
-  const [before, setBefore] = useRecoilState(beforeAtom);
   const [end, setEnd] = useRecoilState(endAtom);
 
   const setNumber = () => {

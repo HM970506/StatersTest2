@@ -1,5 +1,11 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { resultSelector, beforeAtom, gtAtom, endAtom } from "../atoms/atoms";
+import {
+  resultSelector,
+  beforeAtom,
+  gtAtom,
+  endAtom,
+  kAtom,
+} from "../atoms/atoms";
 import { OperButton as Style } from "../styles/buttons";
 import calculation from "./calculation";
 
@@ -8,28 +14,39 @@ export default function OperButton({ oper }) {
   const [before, setBefore] = useRecoilState(beforeAtom);
   const [gt, setGt] = useRecoilState(gtAtom);
   const [end, setEnd] = useRecoilState(endAtom);
+  const [k, setK] = useRecoilState(kAtom);
 
   const setOper = () => {
     let nowResult = result;
     setEnd(true);
 
-    if (before.length === 0) setBefore([oper, nowResult]);
-    else if (before.length === 1) {
-      //계산중
-      if (oper === "=") nowResult = calculation(before[0], result, result);
-      //같은 오퍼 연속 클릭
-      else if (before[0] !== oper) setBefore([oper]); //다른 오퍼 클릭시 덮어씌움
-    } //계산끝
-    else if (before.length === 2)
-      nowResult = calculation(before[0], before[1], result);
+    if (k.length === 0) {
+      if (before.length === 0) setBefore([oper, nowResult]);
+      else if (before.length === 2) {
+        if (!end) nowResult = calculation(before[0], before[1], result);
+        if (end && oper === "=") {
+          if (before[0] === "-") nowResult = -nowResult;
+          else if (before[0] === "/")
+            nowResult = calculation(before[0], 1, result);
+          else if (before[0] === "x")
+            nowResult = calculation(before[0], result, result);
+        }
+        if (end && oper !== "=") {
+          if (before[0] === oper) setK([oper, nowResult]);
+          else if (before[0] !== oper) setBefore([oper]); //다른 오퍼 클릭시 덮어씌움
+        }
+      }
 
-    setResult(nowResult);
+      setResult(nowResult);
 
-    if (oper === "=") {
-      setGt((x) => [...x, nowResult]);
-      setBefore([]);
+      if (oper === "=") {
+        setGt((x) => [...x, nowResult]);
+        setBefore([]);
+      }
+    } else {
+      //k 켜짐
+      nowResult = calculation(k[0], result, k[1]);
     }
   };
-
   return <Style onClick={setOper}>{oper}</Style>;
 }

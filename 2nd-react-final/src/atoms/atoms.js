@@ -15,6 +15,11 @@ export const errorAtom = atom({
   default: 0,
 });
 
+export const kAtom = atom({
+  key: "",
+  default: [],
+});
+
 export const roundAtom = atom({
   key: "round",
   default: "F",
@@ -58,14 +63,14 @@ export const resultSelector = selector({
       else nowResult = (resultAtom, String(result).slice(0, 14));
     } else {
       if (digit === "ADD2") {
-      } else if (round === "CUT") {
+        //이거 어떻게 하냐
+      } else {
         if (result[result.length - 1] === ".") nowResult = result;
-        else
+
+        if (round === "CUT")
           nowResult =
             Math.floor(parseFloat(result) * Math.pow(10, digit)) /
             Math.pow(10, digit);
-      } else {
-        if (result[result.length - 1] === ".") nowResult = result;
         else
           nowResult =
             Math.round(parseFloat(result) * Math.pow(10, digit)) /
@@ -74,6 +79,9 @@ export const resultSelector = selector({
     }
 
     console.log(nowResult);
-    set(resultAtom, nowResult);
+    if (isNaN(nowResult) || nowResult === "Infinity") {
+      set(resultAtom, "0");
+      set(errorAtom, true);
+    } else set(resultAtom, nowResult);
   },
 });

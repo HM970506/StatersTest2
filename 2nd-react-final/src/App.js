@@ -8,6 +8,7 @@ import {
   memoryAtom,
   beforeAtom,
   endAtom,
+  kAtom,
 } from "./atoms/atoms";
 import NumberButton from "./components/numberButtons";
 import ClearButton from "./components/clearButtons";
@@ -23,24 +24,20 @@ function App() {
   const error = useRecoilValue(errorAtom);
   const before = useRecoilValue(beforeAtom);
   const end = useRecoilValue(endAtom);
+  const k = useRecoilValue(kAtom);
 
   useEffect(() => {
-    console.log("엔드:", end);
-  }, [end]);
-
-  useEffect(() => {
-    console.log("비포어:", before);
+    console.log(before);
   }, [before]);
-
-  // useEffect(() => {
-  //   console.log("메모리:", memory);
-  // }, [memory]);
 
   return (
     <Background>
       <Main>
         <Error visible={error}>error</Error>
-        <div>{memory.length === 0 ? null : "M"}</div>
+        <div>
+          {memory.length === 0 ? null : "M"}
+          {k.length === 0 ? null : "K"}
+        </div>
         <Result ref={resultRef}>
           {parseFloat(result).toLocaleString("ko-KR", {
             maximumFractionDigits: 15,
