@@ -1,10 +1,11 @@
-import { useRecoilState } from "recoil";
-import { resultAtom, beforeAtom } from "../atoms/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { resultAtom, beforeAtom, roundAtom } from "../atoms/atoms";
 import { OperButton as Style } from "../styles/buttons";
 
 export default function OperButton({ oper }) {
   const [result, setResult] = useRecoilState(resultAtom);
   const [before, setBefore] = useRecoilState(beforeAtom);
+  const round = useRecoilValue(roundAtom);
 
   const calculation = (oper, a, b) => {
     console.log(a, oper, b);
@@ -14,10 +15,9 @@ export default function OperButton({ oper }) {
     else if (oper === "/") nowResult = parseFloat(a) / parseFloat(b);
     else if (oper === "x") nowResult = parseFloat(a) * parseFloat(b);
 
-    //계산 14자리 맞추기
     if (String(nowResult).includes("."))
-      nowResult = String(nowResult).slice(0, 15);
-    else nowResult = String(nowResult).slice(0, 14);
+      nowResult = String(nowResult).slice(0, round + 1);
+    else nowResult = String(nowResult).slice(0, round);
 
     return nowResult;
   };

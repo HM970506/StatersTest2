@@ -8,13 +8,13 @@ export default function ExtraButton({ oper }) {
 
   const setOper = () => {
     if (oper === "+/-" && result !== "0") setResult(-parseFloat(result));
-    if (oper === "√ ") {
+    else if (oper === "√ ") {
       const nowResult = Math.sqrt(parseFloat(result));
       if (isNaN(nowResult)) {
         setResult("0");
         setError(1);
       } else setResult(String(nowResult));
-    }
+    } else alert("구현 예정입니다.");
   };
 
   return <Style onClick={setOper}>{oper}</Style>;

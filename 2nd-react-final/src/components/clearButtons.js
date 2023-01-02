@@ -9,12 +9,17 @@ export default function ClearButton({ oper }) {
   const [error, setError] = useRecoilState(errorAtom);
 
   const setClear = () => {
-    setResult("0");
-    setError(0);
+    if (oper === "▶") {
+      if (result.length > 1) setResult(result.slice(0, result.length - 1));
+      else setResult("0");
+    } else {
+      setResult("0");
+      setError(0);
 
-    if (oper === "AC") {
-      setBefore([]);
-      setMemory([]);
+      if (oper === "AC") {
+        setBefore([]);
+        setMemory([]);
+      }
     }
   };
 

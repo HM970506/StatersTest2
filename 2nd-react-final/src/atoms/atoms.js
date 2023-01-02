@@ -19,3 +19,8 @@ export const errorAtom = atom({
   key: "error",
   default: 0,
 });
+
+export const roundAtom = atom({
+  key: "round",
+  default: 14,
+});

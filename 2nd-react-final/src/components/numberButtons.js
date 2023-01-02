@@ -1,14 +1,15 @@
-import { useRecoilState } from "recoil";
-import { resultAtom, beforeAtom } from "../atoms/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { resultAtom, beforeAtom, roundAtom } from "../atoms/atoms";
 import { NumberButton as Style } from "../styles/buttons";
 
 export default function NumberButton({ number }) {
   const [result, setResult] = useRecoilState(resultAtom);
   const [before, setBefore] = useRecoilState(beforeAtom);
+  const round = useRecoilValue(roundAtom);
 
   const setNumber = () => {
-    if (String(result).includes(".") && result.length >= 15) return;
-    else if (!String(result).includes(".") && result.length >= 14) return;
+    if (String(result).includes(".") && result.length >= round + 1) return;
+    else if (!String(result).includes(".") && result.length >= round) return;
 
     if (before.length === 1) {
       setBefore((x) => {
