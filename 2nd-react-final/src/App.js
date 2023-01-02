@@ -1,48 +1,32 @@
 import { useEffect, useState, useRef } from "react";
 import { Buttons, MButton } from "./styles/buttons";
 import { Background, Main, Result, Error } from "./styles/layouts";
-import { useRecoilState } from "recoil";
-import { resultAtom, errorAtom } from "./atoms/atoms";
+import { useRecoilState, useRecoilValue } from "recoil";
+import { resultSelector, errorAtom, resultAtom } from "./atoms/atoms";
 import NumberButton from "./components/numberButtons";
 import ClearButton from "./components/clearButtons";
 import OperButton from "./components/operButtons";
 import ExtraButton from "./components/extraButtons";
+import RoundingSelector from "./components/Selectors";
 
 function App() {
   const resultRef = useRef();
-  const [result, setResult] = useRecoilState(resultAtom);
-  const [error, setError] = useRecoilState(errorAtom);
+  const result = useRecoilValue(resultSelector);
+  const result2 = useRecoilValue(resultAtom);
 
+  useEffect(() => {
+    console.log("result:", result);
+    console.log("result2:", result2);
+  }, [result]);
+
+  const [error, setError] = useRecoilState(errorAtom);
   return (
     <Background>
       <Main>
         <Error visible={error}>error</Error>
         <Result ref={resultRef}>{result}</Result>
 
-        <div>
-          <input type="radio" name="rounding" checked value="F" />
-          F
-          <input type="radio" name="rounding" value="CUT" />
-          CUT
-          <input type="radio" name="rounding" value="5/4" />
-          5/4
-        </div>
-
-        <div>
-          <input type="radio" name="digits" value="4" />
-          4
-          <input type="radio" name="digits" value="3" />
-          3
-          <input type="radio" name="digits" value="2" />
-          2
-          <input type="radio" name="digits" value="1" />
-          1
-          <input type="radio" name="digits" value="0" />
-          0
-          <input type="radio" name="digits" checked value="ADD2" />
-          ADD2
-        </div>
-
+        <RoundingSelector />
         <Buttons>
           <ExtraButton oper="H/M/S" />
           <ExtraButton oper="%" />
