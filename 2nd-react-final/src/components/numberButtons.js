@@ -7,17 +7,19 @@ export default function NumberButton({ number }) {
   const [before, setBefore] = useRecoilState(beforeAtom);
 
   const setNumber = () => {
-    if (before.length !== 1) {
-      if (result === "0" && number !== "00") setResult(number);
-      else
-        setResult((x) => {
-          return x + number;
-        });
-    } else {
+    if (before.length === 1) {
       setBefore((x) => {
         return [...x, result];
       });
       setResult(number);
+    } else {
+      if (result === "0") {
+        if (number !== "00") setResult(number);
+        else return;
+      } else
+        setResult((x) => {
+          return x + number;
+        });
     }
   };
 
