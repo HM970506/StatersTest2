@@ -1,8 +1,8 @@
-import { useEffect, useRef } from "react";
+import { useEffect, useState, useRef } from "react";
 import { Buttons, MButton } from "./styles/buttons";
-import { Background, Main, Result } from "./styles/layouts";
+import { Background, Main, Result, Error } from "./styles/layouts";
 import { useRecoilState } from "recoil";
-import { resultAtom, beforeAtom } from "./atoms/atoms";
+import { resultAtom, beforeAtom, errorAtom } from "./atoms/atoms";
 import NumberButton from "./components/numberButtons";
 import ClearButton from "./components/clearButtons";
 import OperButton from "./components/operButtons";
@@ -12,6 +12,7 @@ function App() {
   const resultRef = useRef();
   const [result, setResult] = useRecoilState(resultAtom);
   const [before, setBefore] = useRecoilState(beforeAtom);
+  const [error, setError] = useRecoilState(errorAtom);
 
   // useEffect(() => {
   //   console.log(before);
@@ -20,11 +21,13 @@ function App() {
   return (
     <Background>
       <Main>
+        <Error visible={error}>error</Error>
         <Result ref={resultRef}>{result}</Result>
         <Buttons>
           <OperButton>H/M/S</OperButton>
           <OperButton>%</OperButton>
-          <OperButton>√ </OperButton>
+          <ExtraButton oper="√ " />
+
           <OperButton>▶</OperButton>
           <OperButton>GT</OperButton>
 

@@ -19,4 +19,8 @@ const Result = Styled.div`
     font-size: 20px;
 `;
 
-export { Background, Main, Result };
+const Error = Styled.div`
+    display: ${(props) => (props.visible ? "flex" : "none")}
+`;
+
+export { Background, Main, Result, Error };

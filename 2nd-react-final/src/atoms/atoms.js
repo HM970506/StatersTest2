@@ -14,3 +14,8 @@ export const memoryAtom = atom({
   key: "memory",
   default: [],
 });
+
+export const errorAtom = atom({
+  key: "error",
+  default: 0,
+});
