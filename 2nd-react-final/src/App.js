@@ -1,6 +1,6 @@
 import { useRef } from "react";
 import { Buttons, MButton, OperButton } from "./styles/buttons";
-import { Background, Main, Result } from "./styles/layout";
+import { Background, Main, Result } from "./styles/layouts";
 import { useRecoilState } from "recoil";
 import { resultAtom } from "./atoms/atoms";
 import NumberButton from "./components/numberButtons";
