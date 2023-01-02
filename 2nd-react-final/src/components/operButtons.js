@@ -9,10 +9,16 @@ export default function OperButton({ oper }) {
   const calculation = (oper, a, b) => {
     console.log(a, oper, b);
     let nowResult = 0;
-    if (oper === "+") nowResult = parseInt(a) + parseInt(b);
-    else if (oper === "-") nowResult = parseInt(a) - parseInt(b);
-    else if (oper === "/") nowResult = parseInt(a) / parseInt(b);
-    else if (oper === "x") nowResult = parseInt(a) * parseInt(b);
+    if (oper === "+") nowResult = parseFloat(a) + parseFloat(b);
+    else if (oper === "-") nowResult = parseFloat(a) - parseFloat(b);
+    else if (oper === "/") nowResult = parseFloat(a) / parseFloat(b);
+    else if (oper === "x") nowResult = parseFloat(a) * parseFloat(b);
+
+    //계산 14자리 맞추기
+    if (String(nowResult).includes("."))
+      nowResult = String(nowResult).slice(0, 15);
+    else nowResult = String(nowResult).slice(0, 14);
+
     return nowResult;
   };
 

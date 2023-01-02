@@ -6,6 +6,7 @@ import { resultAtom, beforeAtom } from "./atoms/atoms";
 import NumberButton from "./components/numberButtons";
 import ClearButton from "./components/clearButtons";
 import OperButton from "./components/operButtons";
+import ExtraButton from "./components/extraButtons";
 
 function App() {
   const resultRef = useRef();
@@ -33,7 +34,7 @@ function App() {
           <MButton>M+</MButton>
           <OperButton oper="/" />
 
-          <OperButton>+/-</OperButton>
+          <ExtraButton oper="+/-" />
           <NumberButton number={"7"} />
           <NumberButton number={"8"} />
           <NumberButton number={"9"} />

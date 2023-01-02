@@ -7,6 +7,9 @@ export default function NumberButton({ number }) {
   const [before, setBefore] = useRecoilState(beforeAtom);
 
   const setNumber = () => {
+    if (String(result).includes(".") && result.length >= 15) return;
+    else if (!String(result).includes(".") && result.length >= 14) return;
+
     if (before.length === 1) {
       setBefore((x) => {
         return [...x, result];
