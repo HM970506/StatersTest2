@@ -16,11 +16,6 @@ export default function OperButton({ oper }) {
   const [gt, setGt] = useRecoilState(gtAtom);
   const [end, setEnd] = useRecoilState(endAtom);
   const [k, setK] = useRecoilState(kAtom);
-
-  useEffect(() => {
-    console.log(before);
-  }, [before]);
-
   const setOper = () => {
     let nowResult = result;
     setEnd(true);
@@ -37,15 +32,11 @@ export default function OperButton({ oper }) {
             nowResult = calculation(before[0], result, result);
         }
         if (end && oper !== "=") {
-          console.log(before, oper);
           if (before[0] === oper) setK([oper, nowResult]); //k
           else if (before[0] !== oper) setBefore([oper]); //다른 오퍼 클릭시 덮어씌움
         }
       }
-    } else {
-      console.log(k, result);
-      nowResult = calculation(k[0], result, k[1]);
-    }
+    } else nowResult = calculation(k[0], result, k[1]);
 
     setResult(nowResult);
 
