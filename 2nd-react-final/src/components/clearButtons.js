@@ -1,5 +1,11 @@
 import { useRecoilState } from "recoil";
-import { resultSelector, beforeAtom, gtAtom, errorAtom } from "../atoms/atoms";
+import {
+  resultSelector,
+  beforeAtom,
+  gtAtom,
+  errorAtom,
+  kAtom,
+} from "../atoms/atoms";
 import { ClearButton as Style } from "../styles/buttons";
 
 export default function ClearButton({ oper }) {
@@ -7,6 +13,7 @@ export default function ClearButton({ oper }) {
   const [before, setBefore] = useRecoilState(beforeAtom);
   const [gt, setGt] = useRecoilState(gtAtom);
   const [error, setError] = useRecoilState(errorAtom);
+  const [k, setK] = useRecoilState(kAtom);
 
   const setClear = () => {
     if (oper === "▶") {
@@ -19,6 +26,7 @@ export default function ClearButton({ oper }) {
       if (oper === "AC") {
         setBefore([]);
         setGt([]);
+        setK([]);
       }
     }
   };
