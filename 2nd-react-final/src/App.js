@@ -1,30 +1,45 @@
 import { useEffect, useState, useRef } from "react";
-import { Buttons, MButton } from "./styles/buttons";
+import { Buttons } from "./styles/buttons";
 import { Background, Main, Result, Error } from "./styles/layouts";
-import { useRecoilState, useRecoilValue } from "recoil";
-import { resultSelector, errorAtom, resultAtom } from "./atoms/atoms";
+import { useRecoilValue } from "recoil";
+import {
+  resultSelector,
+  errorAtom,
+  memoryAtom,
+  beforeAtom,
+} from "./atoms/atoms";
 import NumberButton from "./components/numberButtons";
 import ClearButton from "./components/clearButtons";
 import OperButton from "./components/operButtons";
 import ExtraButton from "./components/extraButtons";
 import RoundingSelector from "./components/Selectors";
+import MButton from "./components/mButtons";
 
 function App() {
   const resultRef = useRef();
-  const result = useRecoilValue(resultAtom);
-  const result2 = useRecoilValue(resultSelector);
+  const result = useRecoilValue(resultSelector);
+  const memory = useRecoilValue(memoryAtom);
+  const error = useRecoilValue(errorAtom);
+  const before = useRecoilValue(beforeAtom);
 
   useEffect(() => {
-    console.log("result:", result);
-    console.log("resultSelector:", result2);
-  }, [result, result2]);
+    console.log("비포:", before);
+  }, [before]);
 
-  const [error, setError] = useRecoilState(errorAtom);
+  useEffect(() => {
+    console.log("메모리:", memory);
+  }, [memory]);
+
   return (
     <Background>
       <Main>
         <Error visible={error}>error</Error>
-        <Result ref={resultRef}>{result}</Result>
+        <div>{memory.length === 0 ? null : "M"}</div>
+        <Result ref={resultRef}>
+          {parseFloat(result).toLocaleString("ko-KR", {
+            maximumFractionDigits: 15,
+          })}
+        </Result>
 
         <RoundingSelector />
         <Buttons>
@@ -33,12 +48,12 @@ function App() {
           <ExtraButton oper="√ " />
 
           <ClearButton oper="▶" />
-          <OperButton>GT</OperButton>
+          <ExtraButton oper="GT" />
 
-          <MButton>MC</MButton>
-          <MButton>MR</MButton>
-          <MButton>M-</MButton>
-          <MButton>M+</MButton>
+          <MButton oper="C" />
+          <MButton oper="R" />
+          <MButton oper="+" />
+          <MButton oper="-" />
           <OperButton oper="/" />
 
           <ExtraButton oper="+/-" />

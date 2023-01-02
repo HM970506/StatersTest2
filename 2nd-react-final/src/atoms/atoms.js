@@ -30,6 +30,16 @@ export const resultAtom = atom({
   default: "0",
 });
 
+export const gtAtom = atom({
+  key: "gt",
+  default: "0",
+});
+
+export const endAtom = atom({
+  key: "end",
+  default: false,
+});
+
 export const resultSelector = selector({
   key: "resultSelector",
   get: ({ get }) => {
@@ -38,7 +48,7 @@ export const resultSelector = selector({
   set: ({ set, get }, newValue) => {
     const round = get(roundAtom);
     const digit = get(digitAtom);
-    const result = newValue;
+    const result = newValue === "." ? "0." : newValue;
     let nowResult = 0;
     console.log("지금 상태는 ", round, digit, result);
 
@@ -46,18 +56,21 @@ export const resultSelector = selector({
       if (String(result).includes("."))
         nowResult = (resultAtom, String(result).slice(0, 15));
       else nowResult = (resultAtom, String(result).slice(0, 14));
-    } else if (round === "CUT") {
-      if (result[result.length - 1] === ".") nowResult = result;
-      else
-        nowResult =
-          Math.floor(parseFloat(result) * Math.pow(10, digit)) /
-          Math.pow(10, digit);
     } else {
-      if (result[result.length - 1] === ".") nowResult = result;
-      else
-        nowResult =
-          Math.round(parseFloat(result) * Math.pow(10, digit)) /
-          Math.pow(10, digit);
+      if (digit === "ADD2") {
+      } else if (round === "CUT") {
+        if (result[result.length - 1] === ".") nowResult = result;
+        else
+          nowResult =
+            Math.floor(parseFloat(result) * Math.pow(10, digit)) /
+            Math.pow(10, digit);
+      } else {
+        if (result[result.length - 1] === ".") nowResult = result;
+        else
+          nowResult =
+            Math.round(parseFloat(result) * Math.pow(10, digit)) /
+            Math.pow(10, digit);
+      }
     }
 
     console.log(nowResult);
