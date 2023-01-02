@@ -55,7 +55,6 @@ export const resultSelector = selector({
     const digit = get(digitAtom);
     const result = newValue === "." ? "0." : newValue;
     let nowResult = 0;
-    console.log("지금 상태는 ", round, digit, result);
 
     if (round === "F") {
       if (String(result).includes("."))
@@ -78,7 +77,6 @@ export const resultSelector = selector({
       }
     }
 
-    console.log(nowResult);
     if (isNaN(nowResult) || nowResult === "Infinity") {
       set(resultAtom, "0");
       set(errorAtom, true);

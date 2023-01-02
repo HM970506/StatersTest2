@@ -1,5 +1,4 @@
 export default function calculation(oper, a, b) {
-  console.log(a, oper, b);
   let nowResult = 0;
   if (oper === "+") nowResult = parseFloat(a) + parseFloat(b);
   else if (oper === "-") nowResult = parseFloat(a) - parseFloat(b);

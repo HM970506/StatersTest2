@@ -26,10 +26,6 @@ function App() {
   const end = useRecoilValue(endAtom);
   const k = useRecoilValue(kAtom);
 
-  useEffect(() => {
-    console.log(before);
-  }, [before]);
-
   return (
     <Background>
       <Main>
