@@ -11,13 +11,13 @@ import RoundingSelector from "./components/Selectors";
 
 function App() {
   const resultRef = useRef();
-  const result = useRecoilValue(resultSelector);
-  const result2 = useRecoilValue(resultAtom);
+  const result = useRecoilValue(resultAtom);
+  const result2 = useRecoilValue(resultSelector);
 
   useEffect(() => {
     console.log("result:", result);
-    console.log("result2:", result2);
-  }, [result]);
+    console.log("resultSelector:", result2);
+  }, [result, result2]);
 
   const [error, setError] = useRecoilState(errorAtom);
   return (

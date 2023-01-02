@@ -30,33 +30,34 @@ export const resultAtom = atom({
   default: "0",
 });
 
-//셀렉터로는 후처리만 되네... 전처리를 하고싶은데...!
 export const resultSelector = selector({
   key: "resultSelector",
   get: ({ get }) => {
-    const result = get(resultAtom);
-    return result;
+    return get(resultAtom);
   },
-  set: ({ set, input, get }) => {
+  set: ({ set, get }, newValue) => {
     const round = get(roundAtom);
     const digit = get(digitAtom);
-    const result = get(resultAtom);
+    const result = newValue;
     let nowResult = 0;
     console.log("지금 상태는 ", round, digit, result);
 
     if (round === "F") {
       if (String(result).includes("."))
-        nowResult = (resultAtom, String(result).slice(0, digit + 1));
-      else nowResult = (resultAtom, String(result).slice(0, digit));
+        nowResult = (resultAtom, String(result).slice(0, 15));
+      else nowResult = (resultAtom, String(result).slice(0, 14));
     } else if (round === "CUT") {
-      nowResult =
-        (resultAtom,
-        Math.floor(parseFloat(result) * Math.pow(10, digit)) /
-          Math.pow(10, digit));
-      //버림
+      if (result[result.length - 1] === ".") nowResult = result;
+      else
+        nowResult =
+          Math.floor(parseFloat(result) * Math.pow(10, digit)) /
+          Math.pow(10, digit);
     } else {
-      nowResult = (resultAtom, parseFloat(result).toFixed(digit));
-      //반올림
+      if (result[result.length - 1] === ".") nowResult = result;
+      else
+        nowResult =
+          Math.round(parseFloat(result) * Math.pow(10, digit)) /
+          Math.pow(10, digit);
     }
 
     console.log(nowResult);

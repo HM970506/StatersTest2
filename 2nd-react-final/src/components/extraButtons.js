@@ -1,9 +1,9 @@
 import { useRecoilState } from "recoil";
-import { resultAtom, errorAtom } from "../atoms/atoms";
+import { resultSelector, errorAtom } from "../atoms/atoms";
 import { OperButton as Style } from "../styles/buttons";
 
 export default function ExtraButton({ oper }) {
-  const [result, setResult] = useRecoilState(resultAtom);
+  const [result, setResult] = useRecoilState(resultSelector);
   const [error, setError] = useRecoilState(errorAtom);
 
   const setOper = () => {

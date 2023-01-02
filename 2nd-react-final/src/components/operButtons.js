@@ -1,9 +1,9 @@
 import { useRecoilState, useRecoilValue } from "recoil";
-import { resultAtom, beforeAtom, digitAtom } from "../atoms/atoms";
+import { resultSelector, beforeAtom, digitAtom } from "../atoms/atoms";
 import { OperButton as Style } from "../styles/buttons";
 
 export default function OperButton({ oper }) {
-  const [result, setResult] = useRecoilState(resultAtom);
+  const [result, setResult] = useRecoilState(resultSelector);
   const [before, setBefore] = useRecoilState(beforeAtom);
 
   const calculation = (oper, a, b) => {
