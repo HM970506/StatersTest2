@@ -7,6 +7,7 @@ import {
   errorAtom,
   memoryAtom,
   beforeAtom,
+  endAtom,
 } from "./atoms/atoms";
 import NumberButton from "./components/numberButtons";
 import ClearButton from "./components/clearButtons";
@@ -21,14 +22,19 @@ function App() {
   const memory = useRecoilValue(memoryAtom);
   const error = useRecoilValue(errorAtom);
   const before = useRecoilValue(beforeAtom);
+  const end = useRecoilValue(endAtom);
 
   useEffect(() => {
-    console.log("비포:", before);
+    console.log("엔드:", end);
+  }, [end]);
+
+  useEffect(() => {
+    console.log("비포어:", before);
   }, [before]);
 
-  useEffect(() => {
-    console.log("메모리:", memory);
-  }, [memory]);
+  // useEffect(() => {
+  //   console.log("메모리:", memory);
+  // }, [memory]);
 
   return (
     <Background>

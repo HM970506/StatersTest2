@@ -7,12 +7,14 @@ export default function OperButton({ oper }) {
   const [result, setResult] = useRecoilState(resultSelector);
   const [before, setBefore] = useRecoilState(beforeAtom);
   const [gt, setGt] = useRecoilState(gtAtom);
-  const [end, setEnd] = useRecoilState(gtAtom);
+  const [end, setEnd] = useRecoilState(endAtom);
 
   const setOper = () => {
     let nowResult = result;
+    setEnd(true);
 
-    if (before.length === 1) {
+    if (before.length === 0) setBefore([oper, nowResult]);
+    else if (before.length === 1) {
       //계산중
       if (oper === "=") nowResult = calculation(before[0], result, result);
       //같은 오퍼 연속 클릭
@@ -23,11 +25,8 @@ export default function OperButton({ oper }) {
 
     setResult(nowResult);
 
-    if (oper !== "=") setBefore([oper]); //=아니면 계산중
-    else {
-      // =맞으면 계산끝
+    if (oper === "=") {
       setGt((x) => [...x, nowResult]);
-      setEnd(true);
       setBefore([]);
     }
   };

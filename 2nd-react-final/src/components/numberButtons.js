@@ -1,11 +1,11 @@
 import { useRecoilState } from "recoil";
-import { resultSelector, beforeAtom, gtAtom } from "../atoms/atoms";
+import { resultSelector, beforeAtom, endAtom } from "../atoms/atoms";
 import { NumberButton as Style } from "../styles/buttons";
 
 export default function NumberButton({ number }) {
   const [result, setResult] = useRecoilState(resultSelector);
   const [before, setBefore] = useRecoilState(beforeAtom);
-  const [end, setEnd] = useRecoilState(gtAtom);
+  const [end, setEnd] = useRecoilState(endAtom);
 
   const setNumber = () => {
     //길이 초과시 입력x
@@ -14,27 +14,18 @@ export default function NumberButton({ number }) {
       else if (number === ".") return;
     } else if (!String(result).includes(".") && result.length >= 14) return;
 
+    //결과값 상태인지 확인
     if (end) {
       setResult(number);
       setEnd(false);
     } else {
-      if (before.length === 1) {
-        setBefore((x) => {
-          return [...x, result];
+      if (result === "0") {
+        if (number !== "00") setResult(number);
+        else return;
+      } else
+        setResult((x) => {
+          return x + number;
         });
-        setResult(number);
-      }
-      if (before.length === 0) {
-        setResult(number);
-      } else {
-        if (result === "0") {
-          if (number !== "00") setResult(number);
-          else return;
-        } else
-          setResult((x) => {
-            return x + number;
-          });
-      }
     }
   };
 

@@ -1,14 +1,22 @@
-import { memoryAtom, resultSelector, beforeAtom } from "../atoms/atoms";
+import {
+  memoryAtom,
+  resultSelector,
+  beforeAtom,
+  endAtom,
+} from "../atoms/atoms";
 import { useRecoilState, useRecoilValue } from "recoil";
 import { MButton as Style } from "../styles/buttons";
 import calculation from "./calculation";
 
 export default function MButtons({ oper }) {
   const [memory, setMemory] = useRecoilState(memoryAtom);
-  const before = useRecoilValue(beforeAtom);
+  const [before, setBefore] = useRecoilState(beforeAtom);
   const [result, setResult] = useRecoilState(resultSelector);
+  const [end, setEnd] = useRecoilState(endAtom);
 
   const setOper = () => {
+    setEnd(true);
+    setBefore([]);
     let nowValue = "";
     if (before.length === 2)
       nowValue = calculation(before[0], before[1], result);
