@@ -16,6 +16,7 @@ export default function OperButton({ oper }) {
   const [gt, setGt] = useRecoilState(gtAtom);
   const [end, setEnd] = useRecoilState(endAtom);
   const [k, setK] = useRecoilState(kAtom);
+
   const setOper = () => {
     let nowResult = result;
     setEnd(true);
